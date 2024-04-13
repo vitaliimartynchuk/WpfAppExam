@@ -1,0 +1,230 @@
+﻿<Window x:Class="WpfAppExam.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppExam"
+        mc:Ignorable="d"
+        
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+        
+        Title="Keyboard simulator" Height="600" Width="1200">
+
+    <Window.Resources>
+        <Style x:Key="RoundButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                        BorderBrush="{TemplateBinding BorderBrush}" 
+                        BorderThickness="{TemplateBinding BorderThickness}" 
+                        CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="StyleBGrey" TargetType="{x:Type Button}" BasedOn="{StaticResource RoundButtonStyle}">
+            <Setter Property="Background" Value="#C0C0C0"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="FontSize" Value="25"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Margin" Value="2"/>
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderThickness" Value="0,0,0,5"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StyleBRed" TargetType="{x:Type Button}" BasedOn="{StaticResource RoundButtonStyle}">
+            <Setter Property="Background" Value="White"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderThickness" Value="0,0,0,5"/>
+                    <Setter Property="BorderBrush" Value="#FFAAAA"/>
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderThickness" Value="5"/>
+                    <Setter Property="BorderBrush" Value="#FFAAAA"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StyleBGrin" TargetType="{x:Type Button}" BasedOn="{StaticResource StyleBGrey}">
+            <Setter Property="Background" Value="White"/>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderThickness" Value="0,0,0,5"/>
+                    <Setter Property="BorderBrush" Value="#A2FFC9"/>
+                </Trigger>
+
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="BorderThickness" Value="5"/>
+                    <Setter Property="BorderBrush" Value="#A2FFC9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="StyleBPink" TargetType="{x:Type Button}" BasedOn="{StaticResource StyleBGrey}">
+            <Setter Property="Background" Value="#FFC0CB"/>
+        </Style>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Label Margin="10,0,0,0" FontWeight="Bold">Fails:</Label>
+                <TextBlock Text="{Binding keyboard_simulator.Fale}" Margin="0,5,0,5"></TextBlock>
+
+                <Label Margin="10,0,0,0" FontWeight="Bold">Time:</Label>
+                <TextBlock Text="{Binding RemainingTime}" Margin="0,5,0,5"></TextBlock>
+            </StackPanel>
+
+            <Grid Grid.Row="1" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Command="{Binding GamestartCommand}" Content="Start" Grid.Column="0" Width="Auto" Height="30" Style="{StaticResource StyleBGrin}" FontSize="14" FontWeight="Bold"/>
+                <Button Command="{Binding GamestopCommand}" Content="Stop" Grid.Column="1" Width="Auto" Height="30" Style="{StaticResource StyleBRed}" FontSize="14" FontWeight="Bold"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding keyboard_simulator.History}" x:Name="HistoryText" Grid.Column="0" FontSize="65" TextAlignment="Right" HorizontalAlignment="Right"></TextBlock>
+                <TextBlock Text="{Binding keyboard_simulator.Now}" x:Name="NowText" Grid.Column="1" Background="#C0C0C0" FontSize="65"></TextBlock>
+                <TextBlock Text="{Binding keyboard_simulator.Next}" x:Name="NextText" Grid.Column="2" FontSize="65"></TextBlock>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="Oem3"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">`</Button>
+            <Button Name="D1" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">1</Button>
+            <Button Name="D2" Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">2</Button>
+            <Button Name="D3" Grid.Row="0" Grid.Column="6" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">3</Button>
+            <Button Name="D4" Grid.Row="0" Grid.Column="8" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">4</Button>
+            <Button Name="D5" Grid.Row="0" Grid.Column="10" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">5</Button>
+            <Button Name="D6" Grid.Row="0" Grid.Column="12" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">6</Button>
+            <Button Name="D7" Grid.Row="0" Grid.Column="14" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">7</Button>
+            <Button Name="D8" Grid.Row="0" Grid.Column="16" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">8</Button>
+            <Button Name="D9" Grid.Row="0" Grid.Column="18" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">9</Button>
+            <Button Name="D0" Grid.Row="0" Grid.Column="20" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">0</Button>
+            <Button Name="OemMinus" Grid.Row="0" Grid.Column="22" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">-</Button>
+            <Button Name="OemPlus" Grid.Row="0" Grid.Column="24" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">=</Button>
+
+            <Button Name="Q" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">q</Button>
+            <Button Name="W" Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">w</Button>
+            <Button Name="E" Grid.Row="1" Grid.Column="6" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">e</Button>
+            <Button Name="R" Grid.Row="1" Grid.Column="8" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">r</Button>
+            <Button Name="T" Grid.Row="1" Grid.Column="10" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">t</Button>
+            <Button Name="Y" Grid.Row="1" Grid.Column="12" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">y</Button>
+            <Button Name="U" Grid.Row="1" Grid.Column="14" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">u</Button>
+            <Button Name="I" Grid.Row="1" Grid.Column="16" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">i</Button>
+            <Button Name="O" Grid.Row="1" Grid.Column="18" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">o</Button>
+            <Button Name="P" Grid.Row="1" Grid.Column="20" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">p</Button>
+            <Button Name="OemOpenBrackets" Grid.Row="1" Grid.Column="22" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">[</Button>
+            <Button Name="Oem6" Grid.Row="1" Grid.Column="24" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">]</Button>
+            <Button Name="Oem5" Grid.Row="1" Grid.Column="26" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">\</Button>
+
+            <Button Name="Capital" Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="4" Style="{StaticResource StyleBGrey}">Caps Lock</Button>
+            <Button Name="A" Grid.Row="2" Grid.Column="6" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">a</Button>
+            <Button Name="S" Grid.Row="2" Grid.Column="8" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">s</Button>
+            <Button Name="D" Grid.Row="2" Grid.Column="10" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">d</Button>
+            <Button Name="F" Grid.Row="2" Grid.Column="12" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">f</Button>
+            <Button Name="G" Grid.Row="2" Grid.Column="14" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">g</Button>
+            <Button Name="H" Grid.Row="2" Grid.Column="16" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">h</Button>
+            <Button Name="J" Grid.Row="2" Grid.Column="18" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">j</Button>
+            <Button Name="K" Grid.Row="2" Grid.Column="20" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">k</Button>
+            <Button Name="L" Grid.Row="2" Grid.Column="22" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">l</Button>
+            <Button Name="Oem1" Grid.Row="2" Grid.Column="24" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">;</Button>
+            <Button Name="OemQuotes" Grid.Row="2" Grid.Column="26" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">'</Button>
+
+            <Button Name="LeftShift" Grid.Row="3" Grid.Column="3" Grid.ColumnSpan="4" Style="{StaticResource StyleBGrey}">Shift</Button>
+            <Button Name="Z" Grid.Row="3" Grid.Column="7" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">z</Button>
+            <Button Name="X" Grid.Row="3" Grid.Column="9" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">x</Button>
+            <Button Name="C" Grid.Row="3" Grid.Column="11" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">c</Button>
+            <Button Name="V" Grid.Row="3" Grid.Column="13" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">v</Button>
+            <Button Name="B" Grid.Row="3" Grid.Column="15" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">b</Button>
+            <Button Name="N" Grid.Row="3" Grid.Column="17" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">n</Button>
+            <Button Name="M" Grid.Row="3" Grid.Column="19" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">m</Button>
+            <Button Name="OemComma" Grid.Row="3" Grid.Column="21" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">,</Button>
+            <Button Name="OemPeriod" Grid.Row="3" Grid.Column="23" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">.</Button>
+            <Button Name="OemQuestion" Grid.Row="3" Grid.Column="25" Grid.ColumnSpan="2" Style="{StaticResource StyleBPink}">/</Button>
+
+            
+            <Button Name="Space" Grid.Row="4" Grid.Column="9" Grid.ColumnSpan="12" Style="{StaticResource StyleBGrey}">Space</Button> 
+            
+        </Grid>
+        
+    </Grid>
+</Window>
